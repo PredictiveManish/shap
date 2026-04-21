@@ -1515,7 +1515,7 @@ class TreeEnsemble:
 
         # build a dense numpy version of all the tree objects
         if self.trees is not None and self.trees:
-            max_nodes = np.max([len(t.values) for t in self.trees])
+            max_nodes: int = np.max([len(t.values) for t in self.trees])
             assert len(np.unique([t.values.shape[1] for t in self.trees])) == 1, (
                 "All trees in the ensemble must have the same output dimension!"
             )
@@ -1781,15 +1781,13 @@ class SingleTree:
 
     """
 
-    children_left: npt.NDArray[np.int32]
-    children_right: npt.NDArray[np.int32]
-    children_default: npt.NDArray[np.int32]
-    features: npt.NDArray[np.int32]
-    thresholds: npt.NDArray[np.float64]
-    threshold_types: npt.NDArray[np.int32]
-    values: npt.NDArray[Any]
-    node_sample_weight: npt.NDArray[np.float64]
-    max_depth: int
+    children_left: npt.NDArray[np.int32] = -1 * np.ones(m, dtype="int32")
+    children_right: npt.NDArray[np.int32] = -1 * np.ones(m, dtype="int32")
+    children_default: npt.NDArray[np.int32] = -1 * np.ones(m, dtype="int32")
+    features: npt.NDArray[np.int32] = -2 * np.ones(m, dtype="int32")
+    thresholds: npt.NDArray[np.float64] = -1 * np.ones(m, dtype="float64")
+    values: npt.NDArray[np.float64] = 1 * np.ones(m, dtype="float64")
+    node_sample_weight: npt.NDArray[np.float64] = np.zeros(m, dtype="float64")
 
     def __init__(
         self,
